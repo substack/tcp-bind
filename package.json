@@ -1,0 +1,27 @@
+{
+  "name": "tcp-bind",
+  "version": "1.0.0",
+  "description": "allocate a file descriptor to listen on a port later",
+  "main": "index.js",
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/substack/tcp-bind.git"
+  },
+  "homepage": "https://github.com/substack/tcp-bind",
+  "keywords": [
+    "privileges",
+    "tcp",
+    "sudo",
+    "setuid",
+    "setgid",
+    "port",
+    "fd"
+  ],
+  "author": {
+    "name": "James Halliday",
+    "email": "mail@substack.net",
+    "url": "http://substack.net"
+  },
+  "license": "MIT"
+}
