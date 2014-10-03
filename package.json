@@ -23,5 +23,9 @@
     "email": "mail@substack.net",
     "url": "http://substack.net"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "concat-stream": "~1.4.6",
+    "tape": "^3.0.0"
+  }
 }
