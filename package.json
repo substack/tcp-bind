@@ -8,6 +8,13 @@
     "type": "git",
     "url": "git://github.com/substack/tcp-bind.git"
   },
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "devDependencies": {
+    "concat-stream": "~1.4.6",
+    "tape": "^3.0.0"
+  },
   "homepage": "https://github.com/substack/tcp-bind",
   "keywords": [
     "privileges",
@@ -23,9 +30,5 @@
     "email": "mail@substack.net",
     "url": "http://substack.net"
   },
-  "license": "MIT",
-  "devDependencies": {
-    "concat-stream": "~1.4.6",
-    "tape": "^3.0.0"
-  }
+  "license": "MIT"
 }
