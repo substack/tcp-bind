@@ -5,10 +5,14 @@ var concat = require('concat-stream');
 
 test('double bind', function (t) {
     t.plan(1);
+    t.once('end', function () { server.close() });
     
-    var port = 10000 + Math.floor(Math.random() * 55536);
-    alloc(port);
-    t.throws(function () {
-        alloc(port);
+    var server = net.createServer(function (stream) {
+        stream.end('server0');
+    });
+    server.listen(0, function () {
+        t.throws(function () {
+            alloc(server.address().port);
+        });
     });
 });

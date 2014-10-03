@@ -14,12 +14,21 @@ module.exports = function (addr, port) {
         : h.bind6(addr, port)
     ;
     if (r) {
-        var ex = new Error('bind ' + process._errno);
-        ex.errno = ex.code = process._errno;
-        ex.syscall = 'bind';
-        throw ex;
+        error('bind', process._errno);
+    }
+    
+    var sock = h.getsockname && h.getsockname();
+    if (!sock || (port && port !== sock.port)) {
+        error('bind', 'EADDRINUSE');
     }
     else {
         return h.fd;
     }
 };
+
+function error (syscall, errno) {
+    var ex = new Error(syscall + ' ' + errno);
+    ex.errno = ex.code = errno;
+    ex.syscall = syscall;
+    throw ex;
+}
