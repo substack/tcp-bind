@@ -5,6 +5,8 @@ allocate a file descriptor to listen on a port later
 This is handy if you want to run a server on a low port but want to drop
 privileges as soon as possible.
 
+[![build status](https://secure.travis-ci.org/substack/tcp-bind.png)](http://travis-ci.org/substack/tcp-bind)
+
 # example
 
 Here we allocate a file descriptor for tcp port 80 and then drop permissions
