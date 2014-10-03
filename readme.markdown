@@ -49,7 +49,14 @@ Allocate a file descriptor to listen on `port` at an ipv4 or ipv6 string address
 `addr`.
 
 You can create a tcp server from the file descriptor `fd` later by passing it to
-the server's `.listen()` method.
+the server's `.listen()` method:
+
+```
+server.listen({ fd: fd })
+```
+
+This method throws when the port is already bound and when the current user
+doesn't have permission to open the port requested.
 
 # install
 
