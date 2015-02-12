@@ -1,4 +1,5 @@
 var TCP = process.binding('tcp_wrap').TCP;
+var errno = require('util')._errnoException;
 
 module.exports = function (addr, port) {
     if (typeof addr === 'number' || /^\d+$/.test(addr)) {
@@ -10,25 +11,24 @@ module.exports = function (addr, port) {
     if (!addr) addr = '0.0.0.0';
     var h = new TCP;
     var r = /:/.test(addr)
-        ? h.bind(addr, port)
-        : h.bind6(addr, port)
+        ? h.bind6(addr, port)
+        : h.bind(addr, port)
     ;
     if (r) {
-        error('bind', process._errno);
+        error(r, 'bind');
     }
     
-    var sock = h.getsockname && h.getsockname();
-    if (!sock || (port && port !== sock.port)) {
-        error('bind', 'EADDRINUSE');
+    var sock = {};
+    var s = h.getsockname && h.getsockname(sock);
+    if (s || (port && port !== sock.port)) {
+        error(s, 'EADDRINUSE');
     }
     else {
         return h.fd;
     }
 };
 
-function error (syscall, errno) {
-    var ex = new Error(syscall + ' ' + errno);
-    ex.errno = ex.code = errno;
-    ex.syscall = syscall;
+function error (err, syscall) {
+    var ex = errno(err, syscall);
     throw ex;
 }
