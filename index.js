@@ -44,7 +44,7 @@ function error (code, syscall) {
         ex.syscall = syscall;
         throw ex;
     }
-    else if (errno) {
+    else if (errno && code !== 'EADDRINUSE') {
         throw errno(code, syscall);
     }
     else {
