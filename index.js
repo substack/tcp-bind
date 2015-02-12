@@ -19,16 +19,38 @@ module.exports = function (addr, port) {
     }
     
     var sock = {};
-    var s = h.getsockname && h.getsockname(sock);
-    if (s || (port && port !== sock.port)) {
-        error(s, 'EADDRINUSE');
+    if (/^v0\.10\./.test(process.version)) {
+        sock = h.getsockname && h.getsockname();
+        if (!sock || (port && port !== sock.port)) {
+            error('EADDRINUSE', 'bind');
+        }
+        else return h.fd;
     }
     else {
-        return h.fd;
+        var s = h.getsockname && h.getsockname(sock);
+        if (s || (port && port !== sock.port)) {
+            error('EADDRINUSE', 'bind');
+        }
+        else {
+            return h.fd;
+        }
     }
 };
 
-function error (err, syscall) {
-    var ex = errno(err, syscall);
-    throw ex;
+function error (code, syscall) {
+    if (process._errno) {
+        var ex = new Error(syscall + ' ' + process._errno);
+        ex.errno = ex.code = code;
+        ex.syscall = syscall;
+        throw ex;
+    }
+    else if (errno) {
+        throw errno(code, syscall);
+    }
+    else {
+        var ex = new Error(syscall + ' ' + code);
+        ex.errno = code;
+        ex.syscall = syscall;
+        throw ex;
+    }
 }
