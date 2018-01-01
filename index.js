@@ -1,4 +1,5 @@
-var TCP = process.binding('tcp_wrap').TCP;
+var tcp_wrap = process.binding('tcp_wrap')
+var TCP = tcp_wrap.TCP;
 var errno = require('util')._errnoException;
 
 module.exports = function (addr, port) {
@@ -9,7 +10,7 @@ module.exports = function (addr, port) {
     }
     if (!port) port = 0;
     if (!addr) addr = '0.0.0.0';
-    var h = new TCP;
+    var h = new TCP(tcp_wrap.constants && tcp_wrap.constants.SERVER);
     var r = /:/.test(addr)
         ? h.bind6(addr, port)
         : h.bind(addr, port)
