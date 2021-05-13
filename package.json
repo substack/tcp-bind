@@ -1,6 +1,6 @@
 {
   "name": "tcp-bind",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "allocate a file descriptor to listen on a port later",
   "main": "index.js",
   "dependencies": {},
